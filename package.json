@@ -1,0 +1,24 @@
+{
+  "name": "game-shaking",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Extlib/game-shaking.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Extlib/game-shaking/issues"
+  },
+  "homepage": "https://github.com/Extlib/game-shaking#readme",
+  "devDependencies": {
+    "babel-core": "^6.11.4",
+    "babel-polyfill": "^6.9.1"
+  }
+}

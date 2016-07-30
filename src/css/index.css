@@ -1,0 +1,46 @@
+/* css reset */
+body {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+html {
+    font-size: 100px;
+}
+.stage {
+    width: 8rem;
+    height: 4.8rem;
+    background-color: #666;
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+@keyframes bgmove {
+    100% {
+        transform: translateX(-8rem);
+    }
+}
+.bg {
+    width: 16rem;
+    height: 100%;
+    background: url(../img/bg.png) no-repeat;
+    animation: bgmove 1.2s linear infinite;
+}
+@keyframes heroJump {
+    50% {
+        transform: translateY(-1rem);
+    }
+}
+.hero {
+    width: 50px;
+    height: 50px;
+    background: blue;
+    position: absolute;
+    left: 1rem;
+    bottom: 0.8rem;
+    animation: heroJump .8s linear;
+}
