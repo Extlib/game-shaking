@@ -14,7 +14,7 @@ var GameStage = React.createClass({
             switch(e.keyCode) {
                 // space
                 case 32:
-                    state.setState({ heroJump: true });
+                    this.setState({ heroJump: true });
                     break;
                 // left
                 case 37: break;
@@ -25,13 +25,17 @@ var GameStage = React.createClass({
         console.log(e.keyCode);
     },
     componentDidMount: function() {
+        var that = this;
         window.addEventListener('keydown', this.handleAction, false);
+        this.refs.hero.addEventListener('webkitAnimationEnd', function(e) {
+            that.setState({ heroJump: false });
+        }, false);
     },
     render: function() {
         return (
             <div className="stage">
                 <div className="bg"></div>
-                <div className="hero"></div>
+                <div className={this.state.heroJump ? 'hero jump' : 'hero'} ref="hero"></div>
             </div>
         );
     }

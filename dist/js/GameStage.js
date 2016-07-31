@@ -64,7 +64,7 @@
 	            switch (e.keyCode) {
 	                // space
 	                case 32:
-	                    state.setState({ heroJump: true });
+	                    this.setState({ heroJump: true });
 	                    break;
 	                // left
 	                case 37:
@@ -77,14 +77,18 @@
 	        console.log(e.keyCode);
 	    },
 	    componentDidMount: function componentDidMount() {
+	        var that = this;
 	        window.addEventListener('keydown', this.handleAction, false);
+	        this.refs.hero.addEventListener('webkitAnimationEnd', function (e) {
+	            that.setState({ heroJump: false });
+	        }, false);
 	    },
 	    render: function render() {
 	        return React.createElement(
 	            'div',
 	            { className: 'stage' },
 	            React.createElement('div', { className: 'bg' }),
-	            React.createElement('div', { className: 'hero' })
+	            React.createElement('div', { className: this.state.heroJump ? 'hero jump' : 'hero', ref: 'hero' })
 	        );
 	    }
 	});

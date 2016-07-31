@@ -42,5 +42,7 @@ html {
     position: absolute;
     left: 1rem;
     bottom: 0.8rem;
-    animation: heroJump .8s linear;
+}
+.hero.jump {
+    animation: heroJump .8s ease-in-out;
 }
