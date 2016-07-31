@@ -6,6 +6,7 @@ body {
 }
 html {
     font-size: 100px;
+    font-family: monaco;
 }
 .stage {
     width: 8rem;
@@ -32,12 +33,12 @@ html {
 }
 @keyframes heroJump {
     50% {
-        transform: translateY(-1rem);
+        transform: translateY(-1.2rem);
     }
 }
 .hero {
-    width: 50px;
-    height: 50px;
+    width: .5rem;
+    height: .5rem;
     background: blue;
     position: absolute;
     left: 1rem;
@@ -45,4 +46,33 @@ html {
 }
 .hero.jump {
     animation: heroJump .8s ease-in-out;
+}
+@keyframes monster1 {
+    100% {
+        transform: translateX(-8.5rem);
+    }
+}
+.monster1 {
+    position: absolute;
+    bottom: 0.8rem;
+    right: -.5rem;
+    width: .5rem;
+    height: .5rem;
+    background: blue;
+    animation: monster1 2s linear infinite;
+}
+
+/* debug */
+.debug {
+    width: 3rem;
+    height: 1rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: .15rem;
+    color: red;
+}
+.collision {
+    color: blue;
+    font-size: .3rem;
 }

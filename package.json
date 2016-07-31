@@ -19,6 +19,9 @@
   "homepage": "https://github.com/Extlib/game-shaking#readme",
   "devDependencies": {
     "babel-core": "^6.11.4",
-    "babel-polyfill": "^6.9.1"
+    "babel-polyfill": "^6.9.1",
+    "browser-sync": "^2.13.0",
+    "gulp": "^3.9.1",
+    "resp-modifier": "^6.0.2"
   }
 }

@@ -48,6 +48,9 @@
 
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(35);
+	var SCREEN_WIDTH = 800;
+	var SCREEN_HEIGHT = 480;
+	var Tick;
 
 	var GameStage = React.createClass({
 	    displayName: 'GameStage',
@@ -76,19 +79,52 @@
 	        }
 	        console.log(e.keyCode);
 	    },
+	    gameTick: function gameTick() {
+	        var that = this;
+	        Tick = window.setInterval(function () {
+	            //that.refs.debug
+	            var heroStyle = window.getComputedStyle(that.refs.hero, null);
+	            var matrix = heroStyle.transform.split(',');
+	            var heroY = parseInt(matrix[matrix.length - 1]) || 0;
+	            var heroX = heroStyle.left;
+
+	            var monsStyle = window.getComputedStyle(that.refs.monster, null);
+	            matrix = monsStyle.transform.split(',');
+	            var monsX = SCREEN_WIDTH + (parseInt(matrix[matrix.length - 2]) || 0);
+	            var monsY = monsStyle.bottom;
+
+	            that.refs.debug.innerHTML = '\n                Debug info<br />\n                heroX: ' + heroX + ', heroY: ' + -heroY + 'px<br />\n                monsX: ' + monsX + 'px, monsY: ' + monsY + '<br />\n                <span class="collision">collision!</span>\n                ';
+	        }, 20);
+	    },
 	    componentDidMount: function componentDidMount() {
 	        var that = this;
 	        window.addEventListener('keydown', this.handleAction, false);
 	        this.refs.hero.addEventListener('webkitAnimationEnd', function (e) {
 	            that.setState({ heroJump: false });
 	        }, false);
+	        this.gameTick();
 	    },
 	    render: function render() {
 	        return React.createElement(
 	            'div',
 	            { className: 'stage' },
 	            React.createElement('div', { className: 'bg' }),
-	            React.createElement('div', { className: this.state.heroJump ? 'hero jump' : 'hero', ref: 'hero' })
+	            React.createElement('div', { className: this.state.heroJump ? 'hero jump' : 'hero', ref: 'hero' }),
+	            React.createElement('div', { className: 'monster monster1', ref: 'monster' }),
+	            React.createElement(
+	                'div',
+	                { className: 'debug', ref: 'debug' },
+	                React.createElement(
+	                    'div',
+	                    null,
+	                    'mypos: '
+	                ),
+	                React.createElement(
+	                    'div',
+	                    null,
+	                    'mspos: '
+	                )
+	            )
 	        );
 	    }
 	});
