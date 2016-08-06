@@ -2,7 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 const SCREEN_WIDTH = 800;
 const SCREEN_HEIGHT = 480;
-var Tick;
+var Tick = null;
 var time = 0;
 
 var GameStage = React.createClass({
@@ -25,13 +25,18 @@ var GameStage = React.createClass({
                 // right
                 case 39: break;
             }
+        } else if (e.keyCode === 13) {
+            // ernter
+            this.handleReplay();
         }
         // console.log(e.keyCode);
     },
     handleReplay: function(e) {
+        time = 0;
         this.setState({
             gameState: 1
         });
+        this.gameTick();
     },
     gameTick: function() {
         var that = this, heroStyle, matrix, heroX, heroY, heroW, heroH, monsStyle, monsX, monsY, monsW, monsH;
@@ -53,9 +58,8 @@ var GameStage = React.createClass({
 
             if ((monsX <= (heroX + heroW)) && ((monsX >= (heroX - heroW))) && (heroY <= monsH)) {
                 // console.log('collision', monsX, heroY)
-                that.setState({
-                    gameState: 0
-                });
+                // game over
+                that.gameOver();
             }
 
             that.refs.debug.innerHTML =
@@ -68,6 +72,15 @@ var GameStage = React.createClass({
 
             time += 20;
         }, 20);
+    },
+    gameOver: function () {
+
+        // clear cache data
+        this.setState({
+            gameState: 0
+        });
+        window.clearInterval(Tick);
+        // Tick = null;
     },
     componentDidMount: function() {
         var that = this;

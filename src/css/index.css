@@ -61,7 +61,7 @@ html {
     right: -.5rem;
     width: .5rem;
     height: .5rem;
-    background: blue;
+    background: green;
     animation: monster1 1.5s linear infinite;
 }
 

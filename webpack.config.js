@@ -1,8 +1,14 @@
+var webpack = require('webpack');
+var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common', 'common.bundle.js');
+
 module.exports = {
-    entry: './src/js/GameStage.js',
+    entry: {
+        GameStage: './src/js/GameStage.js',
+        common: ['react-dom', 'react']
+    },
     output: {
         path: './dist/js',
-        filename: 'GameStage.js'
+        filename: '[name].js'
     },
     resolve: {
         extensions: ['', '.js', '.jsx']
@@ -16,5 +22,6 @@ module.exports = {
                 presets: ['es2015', 'stage-0', 'react']
             }
         }]
-    }
+    },
+    plugins: [commonsPlugin]
 }
