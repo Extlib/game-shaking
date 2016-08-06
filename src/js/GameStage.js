@@ -3,6 +3,7 @@ var ReactDOM = require('react-dom');
 const SCREEN_WIDTH = 800;
 const SCREEN_HEIGHT = 480;
 var Tick;
+var time = 0;
 
 var GameStage = React.createClass({
     getInitialState: function() {
@@ -25,29 +26,47 @@ var GameStage = React.createClass({
                 case 39: break;
             }
         }
-        console.log(e.keyCode);
+        // console.log(e.keyCode);
+    },
+    handleReplay: function(e) {
+        this.setState({
+            gameState: 1
+        });
     },
     gameTick: function() {
-        var that = this;
+        var that = this, heroStyle, matrix, heroX, heroY, heroW, heroH, monsStyle, monsX, monsY, monsW, monsH;
         Tick = window.setInterval(function() {
             //that.refs.debug
-            var heroStyle = window.getComputedStyle(that.refs.hero, null);
-            var matrix = heroStyle.transform.split(',');
-            var heroY = parseInt(matrix[matrix.length - 1]) || 0;
-            var heroX = heroStyle.left;
+            heroStyle = window.getComputedStyle(that.refs.hero, null);
+            matrix = heroStyle.transform.split(',');
+            heroW = parseInt(heroStyle.width);
+            heroH = parseInt(heroStyle.height);
+            heroY = Math.abs(parseInt(matrix[matrix.length - 1]) || 0);
+            heroX = parseInt(heroStyle.left);
 
-            var monsStyle = window.getComputedStyle(that.refs.monster, null);
+            monsStyle = window.getComputedStyle(that.refs.monster, null);
             matrix = monsStyle.transform.split(',');
-            var monsX = SCREEN_WIDTH + (parseInt(matrix[matrix.length - 2]) || 0);
-            var monsY = monsStyle.bottom;
+            monsW = parseInt(monsStyle.width);
+            monsH = parseInt(monsStyle.height);
+            monsX = SCREEN_WIDTH + (parseInt(matrix[matrix.length - 2]) || 0);
+            monsY = parseInt(monsStyle.bottom);
 
-            that.refs.debug.innerHTML = 
+            if ((monsX <= (heroX + heroW)) && ((monsX >= (heroX - heroW))) && (heroY <= monsH)) {
+                // console.log('collision', monsX, heroY)
+                that.setState({
+                    gameState: 0
+                });
+            }
+
+            that.refs.debug.innerHTML =
                 `
                 Debug info<br />
-                heroX: ${heroX}, heroY: ${-heroY}px<br />
-                monsX: ${monsX}px, monsY: ${monsY}<br />
-                <span class="collision">collision!</span>
+                heroX: ${heroX}, heroY: ${heroY}<br />
+                monsX: ${monsX}, monsH: ${monsH}<br />
+                ${time/1000}
                 `;
+
+            time += 20;
         }, 20);
     },
     componentDidMount: function() {
@@ -59,14 +78,20 @@ var GameStage = React.createClass({
         this.gameTick();
     },
     render: function() {
+        var state = this.state;
         return (
             <div className="stage">
-                <div className="bg"></div>
-                <div className={this.state.heroJump ? 'hero jump' : 'hero'} ref="hero"></div>
-                <div className="monster monster1" ref="monster"></div>
+                <div className={state.gameState ? 'bg bgmove' : 'bg'}></div>
+                <div className={state.heroJump ? 'hero jump' : 'hero'} ref="hero"></div>
+                <div className={state.gameState ? 'monster monster1' : 'monster'} ref="monster"></div>
                 <div className="debug" ref="debug">
                     <div>mypos: </div>
                     <div>mspos: </div>
+                </div>
+
+                {/* other component */}
+                <div className={state.gameState ? 'hide' : 'game-over'}>
+                    <div className="replay" onClick={this.handleReplay}>Replay</div>
                 </div>
             </div>
         );

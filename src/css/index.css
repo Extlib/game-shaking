@@ -3,6 +3,7 @@ body {
     padding: 0;
     margin: 0;
     border: 0;
+    background: #000;
 }
 html {
     font-size: 100px;
@@ -20,16 +21,18 @@ html {
     bottom: 0;
     overflow: hidden;
 }
+.bg {
+    width: 16rem;
+    height: 100%;
+    background: url(../img/bg.png) no-repeat;
+}
 @keyframes bgmove {
     100% {
         transform: translateX(-8rem);
     }
 }
-.bg {
-    width: 16rem;
-    height: 100%;
-    background: url(../img/bg.png) no-repeat;
-    animation: bgmove 1.2s linear infinite;
+.bgmove {
+    animation: bgmove 1.5s linear infinite;
 }
 @keyframes heroJump {
     50% {
@@ -59,7 +62,7 @@ html {
     width: .5rem;
     height: .5rem;
     background: blue;
-    animation: monster1 2s linear infinite;
+    animation: monster1 1.5s linear infinite;
 }
 
 /* debug */
@@ -75,4 +78,35 @@ html {
 .collision {
     color: blue;
     font-size: .3rem;
+}
+
+/* game over */
+.game-over {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    background: #233;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 100;
+}
+.game-over .replay {
+    position: absolute;
+    margin: auto;
+    width: 20%;
+    height: .48rem;
+    line-height: .48rem;
+    background: red;
+    cursor: pointer;
+    left: 0;
+    right: 0;
+    bottom: 20%;
+    font-size: .2rem;
+    text-align: center;
+}
+.hide {
+    display: none;
 }

@@ -51,6 +51,7 @@
 	var SCREEN_WIDTH = 800;
 	var SCREEN_HEIGHT = 480;
 	var Tick;
+	var time = 0;
 
 	var GameStage = React.createClass({
 	    displayName: 'GameStage',
@@ -77,23 +78,52 @@
 	                    break;
 	            }
 	        }
-	        console.log(e.keyCode);
+	        // console.log(e.keyCode);
+	    },
+	    handleReplay: function handleReplay(e) {
+	        this.setState({
+	            gameState: 1
+	        });
 	    },
 	    gameTick: function gameTick() {
-	        var that = this;
+	        var that = this,
+	            heroStyle,
+	            matrix,
+	            heroX,
+	            heroY,
+	            heroW,
+	            heroH,
+	            monsStyle,
+	            monsX,
+	            monsY,
+	            monsW,
+	            monsH;
 	        Tick = window.setInterval(function () {
 	            //that.refs.debug
-	            var heroStyle = window.getComputedStyle(that.refs.hero, null);
-	            var matrix = heroStyle.transform.split(',');
-	            var heroY = parseInt(matrix[matrix.length - 1]) || 0;
-	            var heroX = heroStyle.left;
+	            heroStyle = window.getComputedStyle(that.refs.hero, null);
+	            matrix = heroStyle.transform.split(',');
+	            heroW = parseInt(heroStyle.width);
+	            heroH = parseInt(heroStyle.height);
+	            heroY = Math.abs(parseInt(matrix[matrix.length - 1]) || 0);
+	            heroX = parseInt(heroStyle.left);
 
-	            var monsStyle = window.getComputedStyle(that.refs.monster, null);
+	            monsStyle = window.getComputedStyle(that.refs.monster, null);
 	            matrix = monsStyle.transform.split(',');
-	            var monsX = SCREEN_WIDTH + (parseInt(matrix[matrix.length - 2]) || 0);
-	            var monsY = monsStyle.bottom;
+	            monsW = parseInt(monsStyle.width);
+	            monsH = parseInt(monsStyle.height);
+	            monsX = SCREEN_WIDTH + (parseInt(matrix[matrix.length - 2]) || 0);
+	            monsY = parseInt(monsStyle.bottom);
 
-	            that.refs.debug.innerHTML = '\n                Debug info<br />\n                heroX: ' + heroX + ', heroY: ' + -heroY + 'px<br />\n                monsX: ' + monsX + 'px, monsY: ' + monsY + '<br />\n                <span class="collision">collision!</span>\n                ';
+	            if (monsX <= heroX + heroW && monsX >= heroX - heroW && heroY <= monsH) {
+	                // console.log('collision', monsX, heroY)
+	                that.setState({
+	                    gameState: 0
+	                });
+	            }
+
+	            that.refs.debug.innerHTML = '\n                Debug info<br />\n                heroX: ' + heroX + ', heroY: ' + heroY + '<br />\n                monsX: ' + monsX + ', monsH: ' + monsH + '<br />\n                ' + time / 1000 + '\n                ';
+
+	            time += 20;
 	        }, 20);
 	    },
 	    componentDidMount: function componentDidMount() {
@@ -105,12 +135,13 @@
 	        this.gameTick();
 	    },
 	    render: function render() {
+	        var state = this.state;
 	        return React.createElement(
 	            'div',
 	            { className: 'stage' },
-	            React.createElement('div', { className: 'bg' }),
-	            React.createElement('div', { className: this.state.heroJump ? 'hero jump' : 'hero', ref: 'hero' }),
-	            React.createElement('div', { className: 'monster monster1', ref: 'monster' }),
+	            React.createElement('div', { className: state.gameState ? 'bg bgmove' : 'bg' }),
+	            React.createElement('div', { className: state.heroJump ? 'hero jump' : 'hero', ref: 'hero' }),
+	            React.createElement('div', { className: state.gameState ? 'monster monster1' : 'monster', ref: 'monster' }),
 	            React.createElement(
 	                'div',
 	                { className: 'debug', ref: 'debug' },
@@ -123,6 +154,15 @@
 	                    'div',
 	                    null,
 	                    'mspos: '
+	                )
+	            ),
+	            React.createElement(
+	                'div',
+	                { className: state.gameState ? 'hide' : 'game-over' },
+	                React.createElement(
+	                    'div',
+	                    { className: 'replay', onClick: this.handleReplay },
+	                    'Replay'
 	                )
 	            )
 	        );
