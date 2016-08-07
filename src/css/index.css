@@ -36,7 +36,7 @@ html {
 }
 @keyframes heroJump {
     50% {
-        transform: translateY(-1.2rem);
+        bottom: 2rem
     }
 }
 .hero {
@@ -48,21 +48,33 @@ html {
     bottom: 0.8rem;
 }
 .hero.jump {
-    animation: heroJump .8s ease-in-out;
+    animation: heroJump .7s ease-in-out;
 }
-@keyframes monster1 {
+@keyframes monsterMove {
     100% {
-        transform: translateX(-8.5rem);
+        /*transform: translateX(-9rem);*/
+        left: -1.2rem
     }
 }
-.monster1 {
+.monster {
     position: absolute;
     bottom: 0.8rem;
-    right: -.5rem;
+    left: 8rem;
+}
+.monster0 {
     width: .5rem;
     height: .5rem;
     background: green;
-    animation: monster1 1.5s linear infinite;
+}
+.monster1 {
+    width: .7rem;
+    height: .7rem;
+    background: green;
+}
+.monster2 {
+    width: .8rem;
+    height: .6rem;
+    background: green;
 }
 
 /* debug */

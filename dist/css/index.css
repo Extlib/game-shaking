@@ -1,0 +1,144 @@
+/* css reset */
+body {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background: #000;
+}
+html {
+    font-size: 100px;
+    font-family: monaco;
+}
+.stage {
+    width: 8rem;
+    height: 4.8rem;
+    background-color: #666;
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+.bg {
+    width: 16rem;
+    height: 100%;
+    background: url(../img/bg.png) no-repeat;
+}
+@-webkit-keyframes bgmove {
+    100% {
+        -webkit-transform: translateX(-8rem);
+                transform: translateX(-8rem);
+    }
+}
+@keyframes bgmove {
+    100% {
+        -webkit-transform: translateX(-8rem);
+                transform: translateX(-8rem);
+    }
+}
+.bgmove {
+    -webkit-animation: bgmove 1.5s linear infinite;
+            animation: bgmove 1.5s linear infinite;
+}
+@-webkit-keyframes heroJump {
+    50% {
+        bottom: 2rem
+    }
+}
+@keyframes heroJump {
+    50% {
+        bottom: 2rem
+    }
+}
+.hero {
+    width: .5rem;
+    height: .5rem;
+    background: blue;
+    position: absolute;
+    left: 1rem;
+    bottom: 0.8rem;
+}
+.hero.jump {
+    -webkit-animation: heroJump .7s ease-in-out;
+            animation: heroJump .7s ease-in-out;
+}
+@-webkit-keyframes monsterMove {
+    100% {
+        /*transform: translateX(-9rem);*/
+        left: -1.2rem
+    }
+}
+@keyframes monsterMove {
+    100% {
+        /*transform: translateX(-9rem);*/
+        left: -1.2rem
+    }
+}
+.monster {
+    position: absolute;
+    bottom: 0.8rem;
+    left: 8rem;
+}
+.monster0 {
+    width: .5rem;
+    height: .5rem;
+    background: green;
+}
+.monster1 {
+    width: .7rem;
+    height: .7rem;
+    background: green;
+}
+.monster2 {
+    width: .8rem;
+    height: .6rem;
+    background: green;
+}
+
+/* debug */
+.debug {
+    width: 3rem;
+    height: 1rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: .15rem;
+    color: red;
+}
+.collision {
+    color: blue;
+    font-size: .3rem;
+}
+
+/* game over */
+.game-over {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    background: #233;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 100;
+}
+.game-over .replay {
+    position: absolute;
+    margin: auto;
+    width: 20%;
+    height: .48rem;
+    line-height: .48rem;
+    background: red;
+    cursor: pointer;
+    left: 0;
+    right: 0;
+    bottom: 20%;
+    font-size: .2rem;
+    text-align: center;
+}
+.hide {
+    display: none;
+}

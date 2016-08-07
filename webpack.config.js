@@ -1,10 +1,11 @@
 var webpack = require('webpack');
 var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common', 'common.bundle.js');
+var autoprefixer = require('autoprefixer');
 
 module.exports = {
     entry: {
         GameStage: './src/js/GameStage.js',
-        common: ['react-dom', 'react']
+        common: ['react-dom', 'react'],
     },
     output: {
         path: './dist/js',
@@ -23,5 +24,5 @@ module.exports = {
             }
         }]
     },
-    plugins: [commonsPlugin]
+    plugins: [commonsPlugin],
 }
